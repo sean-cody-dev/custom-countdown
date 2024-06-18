@@ -19,17 +19,23 @@
         <div class="input-container" id="input-container">
             <h1>Create a Custom Countdown!</h1>
             <form class="form" id="countdown-form" novalidate>
-                <label for="title">Title</label>
-                <input type="text" id="title" placeholder="What are you counting down to?" required>
-                <label for="date-picker">Select a Date</label>
-                <input type="date" id="date-picker" required>
-                <button type="submit">Submit</button>
+                <label for="title">
+                    <span>Title</span>
+                    <span id="title-error" class="error" aria-live="polite"></span>
+                    <input type="text" id="title" placeholder="What are you counting down to?" required>
+                </label>
+                <label for="date-picker">Select a Date
+                    <span id="date-error" class="error" aria-live="polite"></span>
+                    <input type="date" id="date-picker" required>
+                    <span class="error" aria-live="polite"></span>
+                </label>
+                    <button type="submit">Submit</button>
             </form>
         </div>
         <!-- Countdown -->
         <div class="countdown" id="countdown" hidden>
             <h1 id="countdown-title"></h1>
-            <ul>
+            <ul id="countdown-list">
                 <li><span>3</span> Days</li>
                 <li><span>4</span>Hours</li>
                 <li><span>5</span>Minutes</li>

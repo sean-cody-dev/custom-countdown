@@ -210,3 +210,15 @@ li span {
     font-size: 40px;
   }
 }
+
+/* This is the style of our error messages */
+.error {
+  padding: 0;
+
+  font-size: 80%;
+  color: #900;
+}
+
+.error.active {
+  padding: 0.3em;
+}

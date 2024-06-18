@@ -5,11 +5,15 @@ const dateEl = document.getElementById('date-picker');
 const countdownEl = document.getElementById('countdown');
 const countdownTitleEl = document.getElementById('countdown-title');
 const countdownBtn = document.getElementById('countdown-button');
-const timeElements = document.querySelectorAll('span');
+const timeElements = document.querySelectorAll('#countdown-list span');
 
 const completeEl = document.getElementById('complete');
 const completeElInfo = document.getElementById('complete-info');
 const completeBtn = document.getElementById('complete-button');
+
+const countdownTitleError = document.getElementById('title-error');
+const countdownDateError = document.getElementById('date-error');
+let formValid = true;
 
 let countdownTitle = '';
 let countdownDate = '';
@@ -68,27 +72,48 @@ function updateDOM() {
 // Take Values from Form Input
 function updateCountdown(e) {
     e.preventDefault();
+    formValid = true;
+    checkTitleValidation(e);
+    checkDateValidation(e);
     countdownTitle = e.target[0].value;
     countdownDate = e.target[1].value;
+
     savedCountdown = {
         title: countdownTitle,
         date: countdownDate,
     };
-    localStorage.setItem('countdown', JSON.stringify(savedCountdown));
-    // check for valid date
-    if (countdownDate === '') {
-        // TODO: give a better validation message
-        alert('Please select a date for the countdown.');
-    } else {   
+
+    if (formValid) {
+        localStorage.setItem('countdown', JSON.stringify(savedCountdown));
         // Get number version of current date
         countdownValue = new Date(countdownDate).getTime();
         updateDOM();
+
     }
 }
 
-// Reveal Validation Message
-function revealValidationMessage() {
-    
+// TODO: refactor 3 functions into an abstracted function that takes elements and messages as args
+function checkTitleValidation(e) {
+    if (e.target[0].validity.valueMissing) {
+        formValid = false;
+        showError(countdownTitleError, 'Enter a title.');
+    } else {
+        countdownTitleError.textContent = "";
+    }
+}
+
+function checkDateValidation(e) {
+    if (e.target[1].validity.valueMissing) {
+        formValid = false;
+        showError(countdownDateError, 'Choose a date.');
+    } else {
+        countdownDateError.textContent = "";
+    }
+}
+
+function showError(element, message) {
+    element.textContent = message;
+    element.className = "error active";
 }
 
 // Reset All Values
